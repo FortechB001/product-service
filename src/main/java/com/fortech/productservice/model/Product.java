@@ -17,5 +17,6 @@ public class Product {
     @NonNull
     private String name;
 
+    @NonNull
     private String description;
 }
