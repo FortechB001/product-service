@@ -38,7 +38,8 @@ public class ProductController {
      * @param description - the description.
      */
     @PostMapping("/add")
-    public void addStock(@RequestParam(name = "name") String name, @RequestParam(name = "description") String description) {
+    public void addStock(@RequestParam(name = "name") String name,
+                         @RequestParam(name = "description") String description) {
         productRepository.save(new Product(name, description));
     }
 }
