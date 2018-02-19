@@ -3,6 +3,7 @@ package com.fortech.productservice.controller;
 import com.fortech.productservice.model.Product;
 import com.fortech.productservice.repository.ProductRepository;
 import com.fortech.productservice.util.Message;
+import com.fortech.productservice.util.StockClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Rest Controller for the Product related requests.
  */
-@CrossOrigin(origins = {"http://localhost:8080"})
+//@CrossOrigin(origins = {"http://localhost:8081"}) //allow only request from proxy server - Zuul + Hystrix
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -29,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private StockClient stockClient;
 
     /**
      * Displays all products.
@@ -81,7 +85,34 @@ public class ProductController {
      * Delete a product and all stock related
      *
      * @param productId - product Id
-     * @return
+     * @return ResponseEntity
+     */
+  /*  @DeleteMapping(path = "/delete")
+    public ResponseEntity<?> deleteProduct(@RequestParam(name = "productId") String productId) {
+
+        Product productToBeDeleted = productRepository.findOne(productId);
+        if (productToBeDeleted == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        try {
+            ResponseEntity<?> responseEntity = stockClient.deleteStockForAProduct(productId);
+            // productRepository.delete(productId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }*/
+
+    /**
+     * Same thing but with RestTemplate
+     */
+
+    /**
+     * Delete a product and all stock related
+     *
+     * @param productId - product Id
+     * @return ResponseEntity
      */
     @DeleteMapping(path = "/delete")
     public ResponseEntity<?> deleteProduct(@RequestParam(name = "productId") String productId) {
@@ -101,7 +132,5 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-
-
     }
 }
