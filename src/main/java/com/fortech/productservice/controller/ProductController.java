@@ -87,7 +87,7 @@ public class ProductController {
      * @param productId - product Id
      * @return ResponseEntity
      */
-  /*  @DeleteMapping(path = "/delete")
+/*    @DeleteMapping(path = "/delete")
     public ResponseEntity<?> deleteProduct(@RequestParam(name = "productId") String productId) {
 
         Product productToBeDeleted = productRepository.findOne(productId);
@@ -121,9 +121,8 @@ public class ProductController {
         if (productToBeDeleted == null) {
             return ResponseEntity.notFound().build();
         }
-
         try {
-            String url = "http://stock-service/stock/delete?productId=" + productId;
+            String url = "http://STOCK-SERV/stock/delete?productId=" + productId;
             ResponseEntity<?> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, null,
                     new ParameterizedTypeReference<ResponseEntity>() {
                     });
