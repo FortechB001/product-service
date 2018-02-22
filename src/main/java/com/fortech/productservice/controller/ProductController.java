@@ -5,8 +5,6 @@ import com.fortech.productservice.repository.ProductRepository;
 import com.fortech.productservice.util.Message;
 import com.fortech.productservice.util.StockClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,12 +80,13 @@ public class ProductController {
     }
 
     /**
+     * Using - FEIGN
      * Delete a product and all stock related
      *
      * @param productId - product Id
      * @return ResponseEntity
      */
-/*    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/delete")
     public ResponseEntity<?> deleteProduct(@RequestParam(name = "productId") String productId) {
 
         Product productToBeDeleted = productRepository.findOne(productId);
@@ -96,13 +95,13 @@ public class ProductController {
         }
 
         try {
-            ResponseEntity<?> responseEntity = stockClient.deleteStockForAProduct(productId);
-            // productRepository.delete(productId);
+            stockClient.deleteStockForAProduct(productId);
+            productRepository.delete(productId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    }*/
+    }
 
     /**
      * Same thing but with RestTemplate
@@ -114,7 +113,7 @@ public class ProductController {
      * @param productId - product Id
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/delete")
+/*    @DeleteMapping(path = "/delete")
     public ResponseEntity<?> deleteProduct(@RequestParam(name = "productId") String productId) {
 
         Product productToBeDeleted = productRepository.findOne(productId);
@@ -131,5 +130,5 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }
